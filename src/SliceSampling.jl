@@ -17,7 +17,6 @@ function step(
     logL,
     f::AbstractVector{<:Real},
 )
-
     # Sample elipse from prior
     ν = rand(rng, D)
 
@@ -29,7 +28,7 @@ function step(
     θ = rand(rng, Uniform(0, 2π))
     θ_min, θ_max = θ - 2π, θ
 
-    function _step(θ, θ_min, θ_max)
+    while true
         f′ = f .* cos(θ) .+ ν .* sin(θ)
         logLf′ = logL(f′)
         if logLf′ > logy
@@ -41,10 +40,9 @@ function step(
                 θ_max = θ
             end
             θ = rand(rng, Uniform(θ_min, θ_max))
-            return _step(θ, θ_min, θ_max)
         end
     end
-    return _step(θ, θ_min, θ_max)
+    return nothing
 end
 
 function sample(
