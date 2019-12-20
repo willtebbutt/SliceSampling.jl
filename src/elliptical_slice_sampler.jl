@@ -37,7 +37,7 @@ function step(::EllipticalSliceSampler, rng::AbstractRNG, μ₀, Φ, f::Abstract
 end
 
 function sample(
-    ess::EllipticalSliceSampler,
+    ess,
     rng::AbstractRNG,
     μ₀,
     Φ,
